@@ -1,6 +1,9 @@
-@eCommerce.Api_HostAddress = http://localhost:5069
+@eCommerce.Api_HostAddress = https://localhost:7282
 
-GET {{eCommerce.Api_HostAddress}}/weatherforecast/
+GET {{eCommerce.Api_HostAddress}}/api/users/1
 Accept: application/json
 
 ###
+
+GET {{eCommerce.Api_HostAddress}}/api/users/by-email/adrian.mechato@gmail.com
+Accept: application/json

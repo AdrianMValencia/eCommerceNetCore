@@ -64,7 +64,7 @@ public class CreateUser
                 );
         }
 
-        public async Task<BaseResponse<bool>> CreateUserAsync(Command command, CancellationToken cancellationToken)
+        private async Task<BaseResponse<bool>> CreateUserAsync(Command command, CancellationToken cancellationToken)
         {
             var response = new BaseResponse<bool>();
 
