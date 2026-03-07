@@ -5,5 +5,11 @@ Accept: application/json
 
 ###
 
-GET {{eCommerce.Api_HostAddress}}/api/users/by-email/adrian.mechato@gmail.com
+# GET {{eCommerce.Api_HostAddress}}/api/users/by-email/adrian.mechato@gmail.com
+
+POST {{eCommerce.Api_HostAddress}}/api/categories
 Accept: application/json
+Content-Type: application/json
+{
+  "name": "Mouses"
+}

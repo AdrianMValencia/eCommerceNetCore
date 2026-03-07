@@ -6,7 +6,7 @@ public class Product
     public string Name { get; set; } = null!;
     public string Code { get; set; } = null!;
     public string? Description { get; set; }
-    public string? UrlImage { get; set; }
+    public string? UrlImagen { get; set; }
     public decimal Price { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime UpdateDate { get; set; }

@@ -35,18 +35,18 @@ public class GetAllProducts
 
             const string sql = @"
                 SELECT 
-                    ""Id"",
+                    ""ProductId"",
                     ""Name"",
                     ""Code"",
                     ""Description"",
-                    ""UrlImage"",
+                    ""UrlImagen"",
                     ""Price"",
-                    ""CreatedDate"",
-                    ""UpdatedDate"",
+                    ""CreateDate"",
+                    ""UpdateDate"",
                     ""UserId"",
                     ""CategoryId""
                 FROM public.""Products""
-                ORDER BY ""Id"";";
+                ORDER BY ""ProductId"";";
 
             try
             {

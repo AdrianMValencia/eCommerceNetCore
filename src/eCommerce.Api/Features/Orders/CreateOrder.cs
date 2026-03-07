@@ -44,8 +44,8 @@ public class CreateOrder
         {
             var response = new BaseResponse<bool>();
 
-            const string sqlOrder = @"INSERT INTO public.Orders (OrderDate, OrderState, UserId, Total) VALUES (@OrderDate, @OrderState, @UserId, @Total) RETURNING Id;";
-            const string sqlOrderDetail = @"INSERT INTO public.OrderDetails (OrderId, ProductId, Quantity, Price) VALUES (@OrderId, @ProductId, @Quantity, @Price);";
+            const string sqlOrder = @"INSERT INTO public.""Orders"" (""OrderDate"", ""OrderState"", ""UserId"", ""Total"") VALUES (@OrderDate, @OrderState, @UserId, @Total) RETURNING ""OrderId"";";
+            const string sqlOrderDetail = @"INSERT INTO public.""OrderDetails"" (""OrderId"", ""ProductId"", ""Quantity"", ""Price"") VALUES (@OrderId, @ProductId, @Quantity, @Price);";
             try
             {
                 using var connection = _context.CreateConnection();
