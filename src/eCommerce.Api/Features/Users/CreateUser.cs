@@ -5,6 +5,7 @@ using eCommerce.Api.Database;
 using eCommerce.Api.Enums;
 using eCommerce.Api.Shared.Bases;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eCommerce.Api.Features.Users;
 
@@ -21,7 +22,7 @@ public class CreateUser
         public string Email { get; set; } = null!;
         public string? Address { get; set; }
         public string? Cellphone { get; set; }
-        public UserType UserType { get; set; }
+        public string? UserType { get; set; }
     }
     #endregion
 
@@ -30,6 +31,18 @@ public class CreateUser
     {
         public Validator()
         {
+            RuleFor(x => x.Username)
+                .NotEmpty().WithMessage("Username is required.")
+                .MaximumLength(50).WithMessage("Username cannot exceed 50 characters.");
+
+            //RuleFor(x => x.Password)
+            //    .NotEmpty().WithMessage("Password is required.")
+            //    .MinimumLength(6).WithMessage("Password must be at least 6 characters long.")
+            //    .Matches("[A-Z]").WithMessage("Password must contain at least one uppercase letter.")
+            //    .Matches("[a-z]").WithMessage("Password must contain at least one lowercase letter.")
+            //    .Matches("[0-9]").WithMessage("Password must contain at least one number.")
+            //    .Matches(@"[\W]").WithMessage("Password must contain at least one special character.");
+
             RuleFor(x => x.Firstname)
                 .NotEmpty().WithMessage("Firstname is required.")
                 .NotNull().WithMessage("Firstname cannot be null.")
@@ -98,9 +111,12 @@ public class CreateUser
             {
                 using var connection = _context.CreateConnection();
 
+                // La contraseña nunca se persiste en texto plano.
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(command.Password);
+
                 var parameters = new DynamicParameters();
                 parameters.Add("Username", command.Username);
-                parameters.Add("Password", command.Password);
+                parameters.Add("Password", hashedPassword);
                 parameters.Add("Lastname", command.Lastname);
                 parameters.Add("Firstname", command.Firstname);
                 parameters.Add("Email", command.Email);
@@ -138,7 +154,8 @@ public class CreateUser
             {
                 var response = await dispatcher.Dispatch<Command, bool>(command, cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .AllowAnonymous();
         }
     }
     #endregion

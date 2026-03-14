@@ -4,6 +4,7 @@ using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Database;
 using eCommerce.Api.Entities;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 using FluentValidation;
 
 namespace eCommerce.Api.Features.Categories;
@@ -92,7 +93,8 @@ public class GetByIdCategory
                 var query = new Query { Id = id };
                 var response = await dispatcher.Dispatch<Query, Category?>(query, cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.UserAccess);
         }
     }
     #endregion

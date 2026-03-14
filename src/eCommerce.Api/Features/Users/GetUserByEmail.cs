@@ -4,7 +4,9 @@ using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Contracts.Users;
 using eCommerce.Api.Database;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 
 namespace eCommerce.Api.Features.Users;
 
@@ -107,7 +109,8 @@ public class GetUserByEmail
                 var response = await dispatcher
                     .Dispatch<Query, UserResponse>(query, cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.UserAccess);
         }
     }
     #endregion

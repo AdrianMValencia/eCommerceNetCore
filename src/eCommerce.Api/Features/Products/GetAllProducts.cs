@@ -4,6 +4,7 @@ using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Database;
 using eCommerce.Api.Entities;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 
 namespace eCommerce.Api.Features.Products;
 
@@ -81,7 +82,8 @@ public class GetAllProducts
             {
                 var response = await dispatcher.Dispatch<Query, IEnumerable<Product>>(new Query(), cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.UserAccess);
         }
     }
     #endregion

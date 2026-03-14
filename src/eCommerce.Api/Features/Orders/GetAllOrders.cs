@@ -3,6 +3,7 @@ using Dapper;
 using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Database;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 
 namespace eCommerce.Api.Features.Orders;
 
@@ -193,7 +194,8 @@ public class GetAllOrders
             {
                 var response = await dispatcher.Dispatch<Query, IEnumerable<OrderResponse>>(new Query(), cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.AdminAccess);
         }
     }
     #endregion

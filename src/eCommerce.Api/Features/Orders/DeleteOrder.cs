@@ -3,6 +3,7 @@ using Dapper;
 using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Database;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 
 namespace eCommerce.Api.Features.Orders;
 
@@ -71,7 +72,8 @@ public class DeleteOrder
             {
                 var response = await dispatcher.Dispatch<Command, bool>(new Command(id), cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.AdminAccess);
         }
     }
     #endregion

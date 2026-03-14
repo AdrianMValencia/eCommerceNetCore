@@ -3,6 +3,7 @@ using Dapper;
 using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Database;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 
 namespace eCommerce.Api.Features.Orders;
 
@@ -97,7 +98,8 @@ public class UpdateOrder
                 command.OrderId = id;
                 var response = await dispatcher.Dispatch<Command, bool>(command, cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.AdminAccess);
         }
     }
     #endregion

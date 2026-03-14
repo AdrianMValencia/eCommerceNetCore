@@ -4,6 +4,7 @@ using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Database;
 using eCommerce.Api.Entities;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 
 namespace eCommerce.Api.Features.Categories;
 
@@ -75,7 +76,8 @@ public class GetAllCategories
             {
                 var response = await dispatcher.Dispatch<Query, IEnumerable<Category>>(new Query(), cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.UserAccess);
         }
     }
     #endregion

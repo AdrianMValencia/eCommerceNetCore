@@ -4,6 +4,7 @@ using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Database;
 using eCommerce.Api.Entities;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 
 namespace eCommerce.Api.Features.Orders;
 
@@ -72,7 +73,8 @@ public class GetByIdOrder
             {
                 var response = await dispatcher.Dispatch<Query, Order?>(new Query(id), cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.AdminAccess);
         }
     }
     #endregion

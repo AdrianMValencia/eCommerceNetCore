@@ -3,6 +3,7 @@ using Dapper;
 using eCommerce.Api.Abstractions.Messaging;
 using eCommerce.Api.Database;
 using eCommerce.Api.Shared.Bases;
+using eCommerce.Api.Shared.Security;
 using FluentValidation;
 
 namespace eCommerce.Api.Features.Products;
@@ -86,7 +87,8 @@ public class DeleteProduct
                 var command = new Command { Id = id };
                 var response = await dispatcher.Dispatch<Command, bool>(command, cancellationToken);
                 return Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(AuthPolicies.UserAccess);
         }
     }
     #endregion
